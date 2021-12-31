@@ -1,2 +1,5 @@
-# paper.js-draw-and-view
-Created with CodeSandbox
+# React Typescript Paper.js
+
+Draw and View
+
+### `yarn start`

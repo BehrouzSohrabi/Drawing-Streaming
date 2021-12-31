@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -9,19 +8,67 @@ body {
 html,
 body {
   margin: 0;
+  padding: 0;
   height: 100%;
 }
-canvas {
-  background: #eee;
+a{
+  text-decoration: none;
+}
+canvas, .Canvas, .View {
   width: 100%;
   height: 100%;
 }
-
-.controls {
+.App, #root{
+  display: block;
+  height: 100%;
+}
+.Header {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  pointer-events: none;
+  display: flex;
+  background: rgba(0,0,0,.1);
+}
+.Header p{
+  margin: 0;
+  flex: 1;
+  padding: 5px;
+  font-size: 1.5em;
+}
+.Header .button{
+  padding: 5px;
+}
+.Header .left, .Header .center, .Header .right {
+  flex: 1;
+}
+.right{
+  text-align: right;
+}
+.center{
   text-align: center;
+}
+.left{
+  text-align: left;
+}
+.menu{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.menu li{
+  width: 100%;
+  font-size: 1.5em;
+  margin: 10px;
+}
+.menu li a{
+  display: block;
+  text-align: center;
+  padding: 10px;
 }
