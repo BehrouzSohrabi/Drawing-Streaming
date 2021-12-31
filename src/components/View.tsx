@@ -15,30 +15,36 @@ const View = (props: any) => {
 		});
 
 		room.on('message', (data: any) => {
-			console.log(data.data.path);
+			console.log(data);
 			console.log(getByteCount(JSON.stringify(data)) + ' BYTES');
-			contents[index] = {};
-			// console.log(data);
-			// duration in ms
-			contents[index]['ease'] = Math.floor(Math.random() * 0.8) + 1.2;
-			contents[index]['duration'] = data.data.duration;
-			contents[index]['finished'] = false;
+			// defining vars
+			let path = data.data.path;
+			let duration = data.data.duration;
+			let penColor = data.data.color;
+			let penWidth = data.data.width;
+			// setting up path to contents
+			contents[index] = {
+				ease: Math.floor(Math.random() * 0.8) + 1.2, // duration in ms
+				duration: duration,
+				finished: false,
+				path: new Paper.Path(),
+				circle: new Paper.Path.Circle(new Paper.Point(0, 0), penWidth * 5),
+				endTime: null
+			};
 			// draw the line
-			contents[index]['path'] = new Paper.Path();
+			contents[index]['path'].strokeColor = new Paper.Color(penColor);
+			contents[index]['path'].strokeWidth = penWidth;
 			contents[index]['path'].importJSON([
 				'Path',
-				{ segments: JSON.parse(data.data.path) },
+				{ segments: JSON.parse(path) },
 			]);
 			contents[index]['path'].dashArray = [
 				contents[index]['path'].length,
 				contents[index]['path'].length,
 			];
 			// draw the circle
-			contents[index]['circle'] = new Paper.Path.Circle(
-				new Paper.Point(0, 0),
-				10,
-			);
-			contents[index]['endTime'] = null;
+			contents[index]['circle'].strokeColor = new Paper.Color(penColor);
+			// wait for next
 			index++;
 		});
 
@@ -48,8 +54,6 @@ const View = (props: any) => {
 					let now = Date.now();
 					let thisPath = contents[i];
 
-					thisPath['path'].strokeColor = new Paper.Color('black');
-					thisPath['circle'].strokeColor = new Paper.Color('black');
 					if (!thisPath['endTime']) {
 						thisPath['endTime'] = now + thisPath['duration'];
 					}

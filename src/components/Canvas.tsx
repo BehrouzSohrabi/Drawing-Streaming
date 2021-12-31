@@ -13,17 +13,21 @@ const Canvas = (props: any) => {
 	let textItem: any;
 	let segmentsToSend: any;
 	let toSend: any;
+	let penColor: string;
+	let penWidth: number;
 	let draw = () => {
-		textItem = new paper.PointText(new paper.Point(20, 30));
+		textItem = new paper.PointText(new paper.Point(20, 70));
 		textItem.fillColor = new Paper.Color('black');
 		textItem.content = 'Click and drag to draw a line.';
 
 		Paper.view.onMouseDown = function() {
+			
+			penColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+			penWidth = 20 * Math.random();
+
 			path = new paper.Path();
-			path.strokeColor = new Paper.Color(
-				'#' + Math.floor(Math.random() * 16777215).toString(16),
-			);
-			path.strokeWidth = 20 * Math.random();
+			path.strokeColor = new Paper.Color(penColor);
+			path.strokeWidth = penWidth;
 			start = Date.now();
 		};
 		Paper.view.onMouseDrag = function(event: any) {
@@ -72,12 +76,11 @@ const Canvas = (props: any) => {
 				lastCut = segments.length;
 			}
 
-			console.log(JSON.stringify(segments));
-			console.log(JSON.stringify(segmentsToSend));
-			console.log(lastCut);
 			toSend = JSON.stringify(segmentsToSend);
+			exportPath(toSend, duration, penColor, penWidth);
+			
 			console.log(getByteCount(toSend) + ' BYTES');
-			exportPath(toSend, duration);
+			console.log(toSend, duration, penColor, penWidth);
 		};
 	};
 	useEffect(() => {
